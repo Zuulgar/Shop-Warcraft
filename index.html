@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>DnD shop</title>
+    <script src="randomfunction.js"></script>
+  </head>
+  <body>
+     <!-- link to create a JSon from csv https://csvjson.com/csv2json -->
+    <h1>Generatore random di shop per D&D per Warcraft</h1>
+    <form>
+      <input type="radio" name="radioValue" value="RUNOGRAFIA" /> RUNOGRAFIA
+      <input type="radio" name="radioValue" value="ALCHIMIA" /> ALCHIMIA
+      <input type="radio" name="radioValue" value="INCANTAMENTO" /> INCANTAMENTO
+      <input type="radio" name="radioValue" value="SARTORIA" /> SARTORIA
+      <input type="radio" name="radioValue" value="OREFICERIA" /> OREFICERIA
+      <input type="radio" name="radioValue" value="FORGIATURA" /> FORGIATURA
+      <input type="radio" name="radioValue" value="INGEGNERIA" /> INGEGNERIA
+      <input type="radio" name="radioValue" value="CONCIATURA" /> CONCIATURA
+      <input type="radio" name="radioValue" value="INGEGNERIA" />ARTIGIANATO
+      <input type="radio" name="radioValue" value="ALL" /> TUTTI GLI SHOP<br /><br />
+      <input type="number" id="minValue" placeholder="Prezzo minimo" /><br />
+      <input
+        type="number"
+        id="maxValue"
+        placeholder="Prezzo massimo" /><br /><br />
+
+      <button type="button" onclick="generateShop()">Genera lo shop</button>
+    </form>
+
+    <table id="shopTable"></table>
+    <!-- Added an empty table element -->
+
+    <script>
+      var results; // Declare results as a global variable
+
+      function generateShop() {
+        // Get the table element
+        var table = document.getElementById("shopTable");
+
+        // Clear the existing contents of the table
+        table.innerHTML = "";
+
+        // Get the shop data
+        results = getRandomEntries(
+          document.querySelector("input[name=radioValue]:checked").value,
+          document.getElementById("maxValue").value,
+          document.getElementById("minValue").value
+        );
+
+        //console.log(results);
+
+        // Create table header row
+        var headerRow = document.createElement("tr");
+        for (var key in results[0]) {
+          var headerCell = document.createElement("th");
+          headerCell.textContent = key;
+          headerCell.style.textAlign = "center"; // Center align the header cell
+          headerRow.appendChild(headerCell);
+        }
+        table.appendChild(headerRow);
+
+        // Create table data rows
+        for (var i = 0; i < results.length; i++) {
+          var dataRow = document.createElement("tr");
+          for (var key in results[i]) {
+            var dataCell = document.createElement("td");
+            dataCell.textContent = results[i][key];
+            dataCell.style.textAlign = "center"; // Center align the data cell
+            dataRow.appendChild(dataCell);
+          }
+          table.appendChild(dataRow);
+        }
+      }
+    </script>
+  </body>
+</html>
